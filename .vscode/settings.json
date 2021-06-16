@@ -1,5 +1,6 @@
 {
   "python.pythonPath": "menv\\Scripts\\python.exe",
+  "python.analysis.useImportHeuristic": true // disable error cant find path on modelss
   // "python.analysis.extraPaths": [
   //   "watchmate\\**"
   // ],
