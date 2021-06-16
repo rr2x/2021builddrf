@@ -20,12 +20,31 @@ Read -> get, [200 OK] (list with paging or individual)
 Update -> put, [204 + "resource updated successfully"]
 Delete -> delete, [204 + "resource deleted successfully"]
 
+serialization (from complex to common datatype)
+deserialization (from common datatype to complex)
+
+serializers:
+  serializers.Serializer
+  serializers.ModelSerializer
+
+views:
+  function based view
+    @api_view (decorator)
+  class based view
+    APIView
+      Generic Views
+      Mixins
+      Concrete View Classes
+      ViewSet
+
+
 >>> py -m venv menv
 >>> menv\Scripts\activate
 >>> pip install django
->>> pip freeze (check installed packages)
+>>> pip freeze                        (check installed packages)
 >>> django-admin startproject watchmate
 >>> cd watchmate
 >>> py manage.py startapp watchlist_app
 >>> py manage.py migrate
 >>> py manage.py createsuperuser
+>>> pip install djangorestframework
