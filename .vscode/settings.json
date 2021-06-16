@@ -1,0 +1,9 @@
+{
+  "python.pythonPath": "menv\\Scripts\\python.exe",
+  // "python.analysis.extraPaths": [
+  //   "watchmate\\**"
+  // ],
+  // "python.autoComplete.extraPaths": [
+  //   "watchmate\\**"
+  // ]
+}

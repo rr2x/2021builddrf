@@ -37,6 +37,12 @@ views:
       Concrete View Classes
       ViewSet
 
+reset git specific commitId:
+>>> git log
+>>> git reset --hard <commidId>
+
+>>> git rm --cached */__pycache__/*
+
 
 >>> py -m venv menv
 >>> menv\Scripts\activate
