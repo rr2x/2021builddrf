@@ -1,0 +1,31 @@
+api types
+  1. private = within organization only
+
+  2. partner = business exclusive (b2b, selected business partner)
+               ex: imdb, instagram, facebook, googlemaps
+
+  3. public = 3rd party, register to gain access easily
+              has free and paid tiers
+              ex: openweather, coinmarketcap
+
+request = sent by client
+response = sent by server
+
+consumer = using api to get info
+provider = provide info via api
+
+
+Create -> post, [201 CREATED]
+Read -> get, [200 OK] (list with paging or individual)
+Update -> put, [204 + "resource updated successfully"]
+Delete -> delete, [204 + "resource deleted successfully"]
+
+>>> py -m venv menv
+>>> menv\Scripts\activate
+>>> pip install django
+>>> pip freeze (check installed packages)
+>>> django-admin startproject watchmate
+>>> cd watchmate
+>>> py manage.py startapp watchlist_app
+>>> py manage.py migrate
+>>> py manage.py createsuperuser
