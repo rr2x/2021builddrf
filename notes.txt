@@ -37,6 +37,13 @@ views:
       Concrete View Classes
       ViewSet
 
+relationships:
+  one-to-one = models.OneToOneField(...)
+  many-to-one = models.ForeignKey(...)
+  many-to-many = models.ManyToManyField(...)
+
+
+
 reset git specific commitId:
 >>> git log
 >>> git reset --hard <commidId>
