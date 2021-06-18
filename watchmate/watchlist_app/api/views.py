@@ -2,14 +2,22 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from watchlist_app.models import WatchList, StreamPlatform
-from .serializers import WatchListSerializer, StreamPlatformSerializer
+from .serializers import StreamPlatformSerializer2, WatchListSerializer, StreamPlatformSerializer
 
 
 class StreamPlatformListAV(APIView):
 
-    def get(self, _):
+    def get(self, request):
         platform = StreamPlatform.objects.all()
-        serializer = StreamPlatformSerializer(platform, many=True)
+        # context={'request':request} argument is required for serializers.HyperlinkedRelatedField()
+        # serializer = StreamPlatformSerializer(
+        #    platform, many=True)
+
+        # setup used for HyperlinkedModelSerializer
+        serializer = StreamPlatformSerializer2(
+            platform, many=True, context={'request': request}
+        )
+
         return Response(serializer.data)
 
     def post(self, request):
