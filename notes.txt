@@ -43,6 +43,16 @@ relationships:
   many-to-many = models.ManyToManyField(...)
 
 
+concrete view classes:
+  using generic classes to simplify everything on the view
+
+
+djongo = best mongodb driver
+https://www.djongomapper.com/get-started/
+
+ariadnegraphql = best graphql library for django (needs an asgi server like; uvicorn, daphne, hypercorn)
+https://ariadnegraphql.org/docs/intro
+
 
 reset git specific commitId:
 >>> git log
