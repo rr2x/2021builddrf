@@ -1,4 +1,5 @@
-from rest_framework import status, generics, mixins
+from django.shortcuts import get_object_or_404
+from rest_framework import status, generics, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from watchlist_app.models import WatchList, StreamPlatform, Review
@@ -6,15 +7,65 @@ from .serializers import ReviewSerializer, StreamPlatformSerializer2, WatchListS
 
 
 # --- concrete view classes ---
-class ReviewList(generics.ListCreateAPIView):
-    queryset = Review.objects.all()
+class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewSerializer
+
+    # override create method
+    def perform_create(self, serializer):
+        pk = self.kwargs.get('pk')
+        movie = WatchList.objects.get(pk=pk)
+        serializer.save(watchlist=movie)
+
+
+class ReviewList(generics.ListAPIView):
+    # queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    # override queryset
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Review.objects.filter(watchlist=pk)
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 # --- concrete view classes ---
+
+
+# just like Viewset, but everything is inherited and automatically made
+# ReadOnlyModelViewSet = no crud
+# ModelViewSet = has crud
+class StreamPlatformMVS(viewsets.ModelViewSet):
+    queryset = StreamPlatform.objects.all()
+    serializer_class = StreamPlatformSerializer
+    pass
+
+
+# ViewSet + Router = covers;
+# /stream/<int:pk>
+# /stream
+class StreamPlatformVS(viewsets.ViewSet):
+
+    def list(self, _):
+        queryset = StreamPlatform.objects.all()
+        serializer = StreamPlatformSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, _, pk=None):
+        queryset = StreamPlatform.objects.all()
+        watchlist = get_object_or_404(queryset, pk=pk)
+        serializer = StreamPlatformSerializer(watchlist)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = StreamPlatformSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
 
 
 # region "old code"
