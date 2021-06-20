@@ -71,3 +71,4 @@ reset git specific commitId:
 >>> py manage.py migrate
 >>> py manage.py createsuperuser
 >>> pip install djangorestframework
+>>> py manage.py makemigrations <app name>
