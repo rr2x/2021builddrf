@@ -26,10 +26,10 @@ router.register('stream', StreamPlatformMVS, basename='streamplatform')
 
 urlpatterns = [
     # all watchlist
-    path('list', WatchListAV.as_view(), name='watch-list'),
+    path('list/', WatchListAV.as_view(), name='watch-list'),
 
     # specific watchlist
-    path('<int:pk>', WatchDetailAV.as_view(), name='watch-detail'),
+    path('<int:pk>/', WatchDetailAV.as_view(), name='watch-detail'),
 
     # equivalent of:
     # /stream/<int:pk>
@@ -46,17 +46,17 @@ urlpatterns = [
     # path('review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
 
 
-    path('stream/<int:pk>/review-create',
+    path('<int:pk>/review-create/',
          ReviewCreate.as_view(), name='review-create'),
 
-    # stream/platform - id of stream/platform - all reviews
+    # id of stream/platform - all reviews
     # get reviews for this stream/platform
-    path('stream/<int:pk>/review', ReviewList.as_view(), name='review-list'),
+    path('<int:pk>/reviews/', ReviewList.as_view(), name='review-list'),
 
 
-    # stream/platform - review - id of review
+    # review - id of review
     # get specific review
-    path('stream/review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
+    path('review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),
 
 
 ]

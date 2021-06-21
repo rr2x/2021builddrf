@@ -55,7 +55,15 @@ https://ariadnegraphql.org/docs/intro
 
 
 
-permission = access restrictions (authZ, authN)
+permission = access restrictions (authZ, authorization)
+           = user levels
+
+authentication = proves identity and if valid user (authN)
+               = logging in
+               = BasicAuthentication (not recommended, only for testing purposes)
+               = TokenAuthentication
+               = SessionAuthentication
+
 
 
 

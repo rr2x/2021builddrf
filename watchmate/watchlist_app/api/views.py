@@ -21,22 +21,36 @@ class ReviewCreate(generics.CreateAPIView):
     # override create method
     def perform_create(self, serializer):
         pk = self.kwargs.get('pk')
-        movie = WatchList.objects.get(pk=pk)
+        watchlist = WatchList.objects.get(pk=pk)
 
         review_user = self.request.user  # access to logged in 'user' in request
+
+        # check user if already reviewed this watchlist
         review_queryset = Review.objects.filter(
-            watchlist=movie, review_user=review_user)
+            watchlist=watchlist, review_user=review_user)
 
         if review_queryset.exists():
             raise ValidationError("You have already reviewed this movie")
 
-        serializer.save(watchlist=movie, review_user=review_user)
+        # todo: this calculation is wrong, should tally the existing average scores
+        # then divide it with the review count
+
+        if watchlist.number_rating == 0:
+            watchlist.avg_rating = serializer.validated_data['rating']
+        else:
+            watchlist.avg_rating = (
+                watchlist.avg_rating + serializer.validated_data['rating'])/2
+
+        watchlist.number_rating = watchlist.number_rating + 1
+        watchlist.save()
+
+        serializer.save(watchlist=watchlist, review_user=review_user)
 
 
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     # override queryset
     def get_queryset(self):
