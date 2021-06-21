@@ -54,6 +54,12 @@ ariadnegraphql = best graphql library for django (needs an asgi server like; uvi
 https://ariadnegraphql.org/docs/intro
 
 
+
+permission = access restrictions (authZ, authN)
+
+
+
+
 reset git specific commitId:
 >>> git log
 >>> git reset --hard <commidId>
