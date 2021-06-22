@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # current app
     'watchlist_app.apps.WatchlistAppConfig',
+    'user_app.apps.UserAppConfig',
 ]
 
 MIDDLEWARE = [
