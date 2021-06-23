@@ -64,8 +64,11 @@ authentication = proves identity and if valid user (authN)
                = TokenAuthentication
                = SessionAuthentication
 
+rest_framework_simplejwt.views.TokenObtainPairView
+  Access Token = after 5min, gets destroyed and is regenerated using Refresh Token
+  Refresh Token = validity 24hrs
 
-
+  saved at: localStorage
 
 
 reset git specific commitId:
@@ -86,3 +89,4 @@ reset git specific commitId:
 >>> py manage.py createsuperuser
 >>> pip install djangorestframework
 >>> py manage.py makemigrations <app name>
+>>> pip install djangorestframework_simplejwt
