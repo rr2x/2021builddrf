@@ -142,9 +142,27 @@ REST_FRAMEWORK = {
     #     'rest_framework.authentication.BasicAuthentication',
     # ]
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.TokenAuthentication',
-        "rest_framework_simplejwt.authentication.JWTAuthentication"
-    ]
+        'rest_framework.authentication.TokenAuthentication',
+        # "rest_framework_simplejwt.authentication.JWTAuthentication"
+    ],
+
+    # if granular throttling rules are needed,
+    # disable the settings below and on views, apply classes
+    # from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
+    #
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle',
+    # ],
+
+    # these restrictions are used on the UserRateThrottle and AnonRateThrottle classes
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/day',
+        'user': '10/day',
+        'review-create': '1/day',
+        'review-list': '10/day',
+        'review-detail': '2/day',
+    }
 }
 
 # override rest_framework_simplejwt

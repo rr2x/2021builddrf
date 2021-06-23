@@ -5,7 +5,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .serializers import RegistrationSerializer
-# from user_app import models  # required to import even if not used, only for autogeneration of token
+# required to import even if not used, only for autogeneration of token
+from user_app import models
 
 
 @api_view(['POST', ])
@@ -29,15 +30,15 @@ def registration_view(request):
             data['username'] = account.username
             data['email'] = account.email
 
-            # token = Token.objects.get(user=account).key
-            # data['token'] = token
+            token = Token.objects.get(user=account).key
+            data['token'] = token
 
-            refresh = RefreshToken.for_user(account)
+            # refresh = RefreshToken.for_user(account)
 
-            data['token'] = {
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            }
+            # data['token'] = {
+            #     'refresh': str(refresh),
+            #     'access': str(refresh.access_token),
+            # }
 
         else:
             data = serializer.errors

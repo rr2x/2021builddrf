@@ -52,7 +52,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"test2\",\r\n    \"email\": \"test2@t.com\",\r\n    \"password\": \"1111\",\r\n    \"password2\": \"1111\"\r\n}",
+					"raw": "{\r\n    \"username\": \"4\",\r\n    \"email\": \"4@4.com\",\r\n    \"password\": \"123!@#qq\",\r\n    \"password2\": \"123!@#qq\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -85,7 +85,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token 274c3cb2f6c55c1dec7b97381954650f4f6ab549",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI0NDMwODQ3LCJqdGkiOiJiYzk1ZmUxODA1ZWY0MWRmOGQzMDE0OWE0MDJiZGFkYiIsInVzZXJfaWQiOjF9.QK0SGQfKNFcUC9PmLumoxaDFo9Gz9tPCPGYcm-HfYRc",
 						"type": "text"
 					}
 				],
@@ -132,6 +132,163 @@
 					"path": [
 						"account",
 						"logout",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stream",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 0783528fb6d83b3eda30927b9567a0f6f888240d",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Disney+\",\r\n    \"about\": \"Latest movies\",\r\n    \"website\": \"www.disneyplus.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/watch/stream/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"watch",
+						"stream",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 9bc425ad67cc9e4669e2ee01b18160fe885a6efd",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"The Man - Season 3\",\r\n    \"storyline\": \"Growth of man in world\",\r\n    \"platform\": 3,\r\n    \"active\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/watch/list/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"watch",
+						"list",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "account/api/token/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"0\",\r\n    \"password\": \"0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/account/api/token/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"account",
+						"api",
+						"token",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/account/api/token/refresh/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "refresh eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYyNDUxNjk0NywianRpIjoiZmViOTc0MDZhN2FlNDM0NDk1NjZjMmY1ZDA4MGZiNzUiLCJ1c2VyX2lkIjoxfQ.SwnOBJvv4glXLkH10_mGTkyQUaZ01lC9d6_ZK7_Dr7Y",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYyNDUxNjk0NywianRpIjoiZmViOTc0MDZhN2FlNDM0NDk1NjZjMmY1ZDA4MGZiNzUiLCJ1c2VyX2lkIjoxfQ.SwnOBJvv4glXLkH10_mGTkyQUaZ01lC9d6_ZK7_Dr7Y\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/account/api/token/refresh/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"account",
+						"api",
+						"token",
+						"refresh",
 						""
 					]
 				}

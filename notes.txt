@@ -88,6 +88,7 @@ NOTE = check rest_framework_simplejwt documentation for better understanding
 
 Throttling = restrict an IP depending on number of request per time
 
+throttle classes can be combined
 
 
 reset git specific commitId:

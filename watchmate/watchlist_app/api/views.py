@@ -10,11 +10,15 @@ from watchlist_app.models import WatchList, StreamPlatform, Review
 
 from .serializers import ReviewSerializer, StreamPlatformSerializer2, WatchListSerializer, StreamPlatformSerializer
 
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
+from watchlist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
+
 
 # --- concrete view classes ---
 class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [ReviewCreateThrottle]
 
     def get_queryset(self):
         return Review.objects.all()
@@ -51,7 +55,8 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [ReviewListThrottle]
 
     # override queryset
     def get_queryset(self):
@@ -62,7 +67,13 @@ class ReviewList(generics.ListAPIView):
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    # permission_classes = [IsReviewUserOrReadOnly]
+    permission_classes = [IsReviewUserOrReadOnly]
+    # the two below works together
+    # add restriction according to this view
+    # check settings.py to see the configuration
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'review-detail'
+
 # --- concrete view classes ---
 
 
@@ -70,7 +81,7 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
 # ReadOnlyModelViewSet = no crud
 # ModelViewSet = has crud
 class StreamPlatformMVS(viewsets.ModelViewSet):
-    # permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
     queryset = StreamPlatform.objects.all()
     serializer_class = StreamPlatformSerializer
 
@@ -79,7 +90,7 @@ class StreamPlatformMVS(viewsets.ModelViewSet):
 # /stream/<int:pk>
 # /stream
 class StreamPlatformVS(viewsets.ViewSet):
-    # permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
     def list(self, _):
         queryset = StreamPlatform.objects.all()
@@ -126,7 +137,7 @@ class StreamPlatformVS(viewsets.ViewSet):
 # endregion
 
 class StreamPlatformListAV(APIView):
-    # permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
     def get(self, request):
         platform = StreamPlatform.objects.all()
@@ -152,7 +163,7 @@ class StreamPlatformListAV(APIView):
 
 
 class StreamPlatformDetailAV(APIView):
-    # permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
     def get(self, _, pk):
         try:
@@ -181,7 +192,7 @@ class StreamPlatformDetailAV(APIView):
 
 
 class WatchListAV(APIView):
-    # permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
     def get(self, _):
         movies = WatchList.objects.all()
@@ -199,7 +210,7 @@ class WatchListAV(APIView):
 
 
 class WatchDetailAV(APIView):
-    # permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
 
     def get(self, _, pk):
         try:
