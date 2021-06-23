@@ -146,3 +146,9 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ]
 }
+
+# override rest_framework_simplejwt
+SIMPLE_JWT = {
+    # will also resend a new Refresh Token when requesting a new Access Token
+    'ROTATE_REFRESH_TOKENS': True
+}

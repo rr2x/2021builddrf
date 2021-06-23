@@ -64,11 +64,30 @@ authentication = proves identity and if valid user (authN)
                = TokenAuthentication
                = SessionAuthentication
 
+
 rest_framework_simplejwt.views.TokenObtainPairView
   Access Token = after 5min, gets destroyed and is regenerated using Refresh Token
   Refresh Token = validity 24hrs
 
-  saved at: localStorage
+using "access token" to access a restricted resource:
+POST ... TokenObtainPairView
+  Headers:
+    key=Authorization
+    value=Bearer <access token value from TokenObtainPairView>
+
+using "refresh token" to create a new "access token":
+POST ... TokenRefreshView
+  Body:
+    raw -> json
+    {
+      "refresh": "<refresh token value>"
+    }
+
+NOTE = check rest_framework_simplejwt documentation for better understanding
+
+
+Throttling = restrict an IP depending on number of request per time
+
 
 
 reset git specific commitId:
