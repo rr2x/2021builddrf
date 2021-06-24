@@ -91,6 +91,15 @@ Throttling = restrict an IP depending on number of request per time
 throttle classes can be combined
 
 
+Filtering via .get_queryset()
+  Filter
+  Search
+  Order
+
+  django-filter = only works on generic views
+
+
+
 reset git specific commitId:
 >>> git log
 >>> git reset --hard <commidId>

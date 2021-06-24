@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'rest_framework.authtoken',  # will create database table for tokens, need to migrate
+    'django_filters',
 
     # current app
     'watchlist_app.apps.WatchlistAppConfig',

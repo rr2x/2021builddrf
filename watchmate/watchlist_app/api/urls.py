@@ -10,7 +10,9 @@ from .views import (
     ReviewList,
     ReviewDetail,
     StreamPlatformVS,
-    StreamPlatformMVS
+    StreamPlatformMVS,
+    UserReview,
+    WatchListGV
 )
 
 router = DefaultRouter()
@@ -30,6 +32,7 @@ urlpatterns = [
 
     # specific watchlist
     path('<int:pk>/', WatchDetailAV.as_view(), name='watch-detail'),
+    path('list2/', WatchListGV.as_view(), name='watch-detail'),
 
     # equivalent of:
     # /stream/<int:pk>
@@ -57,6 +60,13 @@ urlpatterns = [
     # review - id of review
     # get specific review
     path('review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),
+
+
+    path('reviews/', UserReview.as_view(), name='user-review-detail'),
+
+    # for self.kwargs
+    # path('reviews/<str:username>/', UserReview.as_view(),
+    #      name='user-review-detail'),
 
 
 ]

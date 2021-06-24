@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status, generics, viewsets
+from rest_framework import status, generics, viewsets, filters
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
@@ -12,6 +12,29 @@ from .serializers import ReviewSerializer, StreamPlatformSerializer2, WatchListS
 
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
 from watchlist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
+
+from django_filters.rest_framework import DjangoFilterBackend
+
+
+class UserReview(generics.ListAPIView):
+    # queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    # permission_classes = [IsAuthenticated]
+    # throttle_classes = [ReviewListThrottle]
+
+    # -----for filtering-------
+    # def get_queryset(self):
+    #     # self.kwargs['username'] is <string:username> from url
+    #     # .../reviews/<username>/
+    #     username = self.kwargs['username']
+    #     return Review.objects.filter(review_user__username=username)
+
+    # -----for query parameter-----
+    def get_queryset(self):
+        # self.request.query_params.get('username', None) is from url
+        # .../reviews/?username=<username>
+        username = self.request.query_params.get('username', None)
+        return Review.objects.filter(review_user__username=username)
 
 
 # --- concrete view classes ---
@@ -55,8 +78,12 @@ class ReviewCreate(generics.CreateAPIView):
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticated]
-    throttle_classes = [ReviewListThrottle]
+    # permission_classes = [IsAuthenticated]
+    throttle_classes = [ReviewListThrottle, AnonRateThrottle]
+
+    # will use query parameter ../../?review_user__username=<username>&active=true
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['review_user__username', 'active']
 
     # override queryset
     def get_queryset(self):
@@ -207,6 +234,32 @@ class WatchListAV(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+
+class WatchListGV(generics.ListAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = WatchListSerializer
+    # filtering (exact match)
+    # watch/list2/?title=The Girl
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['title', 'platform__name']
+
+    # searching (with search options)
+    # watch/list2/?search=the
+    # search options:
+    # ^ starts with
+    # = exact match
+    # @ full search (only for django postgresql backend)
+    # $ regex search
+    #
+    #       example usage:
+    #           search_fields = ['^title', '=platform__name']
+
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title', 'platform__name', 'avg_rating']
+
+    # combine (reverse order for title using - prefix):
+    # http://127.0.0.1:8000/watch/list2/?search=man&ordering=-title
 
 
 class WatchDetailAV(APIView):
