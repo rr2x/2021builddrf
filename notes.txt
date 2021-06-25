@@ -99,6 +99,8 @@ Filtering via .get_queryset()
   django-filter = only works on generic views
 
 
+>>> py manage.py test
+
 
 reset git specific commitId:
 >>> git log

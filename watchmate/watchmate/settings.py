@@ -158,11 +158,11 @@ REST_FRAMEWORK = {
 
     # these restrictions are used on the UserRateThrottle and AnonRateThrottle classes
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '5/day',
-        'user': '10/day',
-        'review-create': '1/day',
-        'review-list': '10/day',
-        'review-detail': '2/day',
+        'anon': '500/day',
+        'user': '100/day',
+        'review-create': '100/day',
+        'review-list': '100/day',
+        'review-detail': '200/day',
     },
 
     # for pagination (global setting)
