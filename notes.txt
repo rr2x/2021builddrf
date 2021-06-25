@@ -101,6 +101,14 @@ Filtering via .get_queryset()
 
 >>> py manage.py test
 
+test driven development (TDD) / test-first-development
+
+models->testcase->serializer->views
+
+
+generate requirements.txt
+>>> pip freeze > requirements.txt
+
 
 reset git specific commitId:
 >>> git log
