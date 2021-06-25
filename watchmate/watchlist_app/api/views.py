@@ -12,6 +12,7 @@ from .serializers import ReviewSerializer, StreamPlatformSerializer2, WatchListS
 
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
 from watchlist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
+from watchlist_app.api.pagination import WatchListPagination, WatchListLOPagination, WatchListCPagination
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -239,6 +240,12 @@ class WatchListAV(APIView):
 class WatchListGV(generics.ListAPIView):
     queryset = WatchList.objects.all()
     serializer_class = WatchListSerializer
+    # pagination_class = WatchListPagination
+    # pagination_class = WatchListLOPagination
+
+    # not compatible with filter_backends = filters.OrderingFilter
+    pagination_class = WatchListCPagination
+
     # filtering (exact match)
     # watch/list2/?title=The Girl
     # filter_backends = [DjangoFilterBackend]
@@ -255,8 +262,8 @@ class WatchListGV(generics.ListAPIView):
     #       example usage:
     #           search_fields = ['^title', '=platform__name']
 
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['title', 'platform__name', 'avg_rating']
+    # filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    # search_fields = ['title', 'platform__name', 'avg_rating']
 
     # combine (reverse order for title using - prefix):
     # http://127.0.0.1:8000/watch/list2/?search=man&ordering=-title
